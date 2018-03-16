@@ -59,14 +59,21 @@ RATIO_COUNT = ratio_self.count()
 x = np.arange(RATIO_COUNT)
 WIDTH = 0.4
 
-self_bars = ax.bar(x-WIDTH, ratio_self, width=WIDTH, color='b', align='center')
-others_bars = ax.bar(x, ratio_others, width=WIDTH, color='g', align='center')
+self_bars = ax.bar(x, ratio_self, width=WIDTH, color='b', align='edge')
+others_bars = ax.bar(x + WIDTH, ratio_others, width=WIDTH, color='g', align='edge')
+
+# With these changes, no part of any bar has a negative x coordinate
 
 ax.set_xlabel('Ratios')
 ax.set_ylabel('Observations')
 labels = [str(x) for x in ratio_self.index]
-labels.insert(0, '')  # without this, the bar labels are offset by one
 ax.set_xticklabels(labels)
+
+# This creates the following xticks (ax.xaxis.majorticks):
+# [Text(-1,0,'10:1'), Text(0,0,'5:1'), Text(1,0,'2:1'), Text(2,0,'1:1'),
+# Text(3,0,'1:2'), Text(4,0,'1:5'), Text(5,0,'1:10'), Text(6,0,''),
+# Text(7,0,''), Text(8,0,'')]
+
 ax.legend((self_bars[0], others_bars[0]),
           ('Self', 'Most popular'))
 
