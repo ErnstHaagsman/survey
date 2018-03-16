@@ -19,7 +19,7 @@ dtypes = {x.name : x.dtype for x in DATA_DICTIONARY if x.dtype}
 # same for converters
 converters = {x.name : x.converter for x in DATA_DICTIONARY if x.converter}
 
-df = pd.read_csv('data/python_psf_external.csv',
+df = pd.read_csv('data/survey.csv',
                  header=0,
                  names=names,
                  dtype=dtypes,
@@ -64,8 +64,8 @@ others_bars = ax.bar(x, ratio_others, width=WIDTH, color='g', align='center')
 
 ax.set_xlabel('Ratios')
 ax.set_ylabel('Observations')
-labels = [str(x) for x in ratio_self.index]
-labels.insert(0, '')  # without this, the bar labels are offset by one
+labels = [str(lbl) for lbl in ratio_self.index]
+ax.set_xticks(x - 0.5 * WIDTH)
 ax.set_xticklabels(labels)
 ax.legend((self_bars[0], others_bars[0]),
           ('Self', 'Most popular'))
